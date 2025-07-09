@@ -28,6 +28,12 @@ process_txt <- function(file,
                         site = field_sheet$Site[field_sheet$file == file_name],
                         date = field_sheet$Date[field_sheet$file == file_name],
                         time = field_sheet$Time[field_sheet$file == file_name]) {
+  file=files_to_process[3]
+  file_name = sub(".txt","",file)
+  reservoir = field_sheet$Reservoir[field_sheet$file == file_name]
+  site = field_sheet$Site[field_sheet$file == file_name]
+  date = field_sheet$Date[field_sheet$file == file_name]
+  time = field_sheet$Time[field_sheet$file == file_name]
   
   
   message("Processing ", file_name,"
