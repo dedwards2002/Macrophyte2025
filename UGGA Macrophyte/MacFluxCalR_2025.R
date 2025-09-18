@@ -27,13 +27,8 @@ process_txt <- function(file,
                         reservoir = field_sheet$Reservoir[field_sheet$file == file_name],
                         site = field_sheet$Site[field_sheet$file == file_name],
                         date = field_sheet$Date[field_sheet$file == file_name],
-                        time = field_sheet$Time[field_sheet$file == file_name]) {
-  file=files_to_process[3]
-  file_name = sub(".txt","",file)
-  reservoir = field_sheet$Reservoir[field_sheet$file == file_name]
-  site = field_sheet$Site[field_sheet$file == file_name]
-  date = field_sheet$Date[field_sheet$file == file_name]
-  time = field_sheet$Time[field_sheet$file == file_name]
+                        time = field_sheet$Time[field_sheet$file == file_name],
+                        run_time = field_sheet$Run_Time_Min[field_sheet$file == file_name]-1) {
   
   
   message("Processing ", file_name,"
@@ -52,7 +47,7 @@ process_txt <- function(file,
   
   # Then calculate fluxes
   flux_output <- FluxCal(data = flux_lgr, # Dataframe loaded in
-                          win = 4, # Window length = 4 minutes
+                          win = run_time, # Window length = 4 minutes make a ve
                           vol = 0.020876028*1000, # Volume of trap in liters
                           area = 0.1451465, # Area of trap in m^2
                           df_cue = time_cue, # End times selected using SelCue
@@ -68,13 +63,14 @@ process_txt <- function(file,
 
 
 #Identify all files we SHOULD have (from field sheet)
-files <- paste0(field_sheet$File,".txt")
+files <- paste0(field_sheet$file,".txt")
 #Identify all files that have already been processed (in the processed_csvs folder)
 processed_files <- sub(".csv", ".txt", list.files("processed_csvs"))
 #Compare these two to figure out which files still need to be processed
 files_to_process <- files[!files %in% processed_files]
 #Exclude any files that we have decided not to process (see notes above)
-#files_to_process <- files_to_process[!files_to_process %in% c()] # very messy and doesn't seem usable
+files_to_process <- files_to_process[!files_to_process %in% c("gga_2001-12-31_f0212.txt", "gga_2001-12-31_f0213.txt", "gga_2001-12-31_f0214.txt", "gga_2001-12-31_f0215.txt", "gga_2001-12-31_f0216.txt", "gga_2001-12-31_f0223.txt", "gga_2001-12-31_f0224.txt"
+                                                              )] # very messy and doesn't seem usable
 
 
 ## RUN THE PROCESSING!!
@@ -82,7 +78,7 @@ files_to_process <- files[!files %in% processed_files]
 # the second peak. When finished, click on 'Stop' in the upper left-hand corner and then click 'Stop locator'
 # This generates a list of 'end' times for each peak saved as time_cue_x
 for (file in files_to_process) {
-  process_txt(files[2])
+  process_txt(file)
 }
 #As you go, this saves each output file as a csv for later use
 
