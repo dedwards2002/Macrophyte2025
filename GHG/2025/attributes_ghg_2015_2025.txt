@@ -1,0 +1,11 @@
+attributeName	attributeDefinition	class	unit	dateTimeFormatString	missingValueCode	missingValueCodeExplanation
+Reservoir	Three-letter code corresponding to sampled reservoir; FCR = Falling Creek Reservoir; BVR = Beaverdam Reservoir	categorical			NA	value is missing
+Site	Sampling site (see site_descriptions.csv for more information)	numeric	dimensionless		NA	value is missing
+DateTime	Date and time of sampling. All data were collected in the eastern time zone of the U.S.A., with daylight savings time observed	Date		YYYY-MM-DD hh:mm:ss	NA	value is missing
+Depth_m	Water depth where the sample was collected	numeric	meter		NA	value is missing
+Rep	Field replicates collected at the same site, date, and depth	numeric	dimensionless		NA	value is missing
+CH4_umolL	Dissolved methane concentration	numeric	micromolePerLiter		NA	value is missing
+CO2_umolL	Dissolved carbon dioxide concentration	numeric	micromolePerLiter		NA	value is missing
+Flag_DateTime	Flag value for DateTime	categorical			NA	value is missing
+Flag_CH4_umolL	Flag value for methane concentration	categorical			NA	value is missing
+Flag_CO2_umolL	Flag value for carbon dioxide concentration	categorical			NA	value is missing

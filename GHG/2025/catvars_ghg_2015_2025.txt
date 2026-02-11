@@ -1,0 +1,20 @@
+attributeName	code	definition
+Flag_CH4_umolL	0	0 = the samples and replicates are good
+Flag_CH4_umolL	1	1 = Sample was either not collected or was not retained due to issues with the GC
+Flag_CH4_umolL	2	2 = Sample was below the method detection limit or negative value changed to 0
+Flag_CH4_umolL	3	3 = The difference between the reps are above the limit of quantification and >30% and <50% different from each other. Both replicates were retained but flagged
+Flag_CH4_umolL	4	4 = The difference between the reps are above the limit of quantification and >50% different from each other. Both replicates were retained but flagged
+Flag_CH4_umolL	6	6 = No peak detected and set to 0
+Flag_CO2_umolL	0	0 = the samples and replicates are good
+Flag_CO2_umolL	1	1 = Sample was either not collected or was not retained due to issues with the GC
+Flag_CO2_umolL	2	2 = Sample was below the method detection limit or negaitve value changed to 0
+Flag_CO2_umolL	3	3 = The difference between the reps are above the limit of quantification and >30% and <50% different from each other. Both replicates were retained but flagged
+Flag_CO2_umolL	4	4 = The difference between the reps are above the limit of quantification and >50% different from each other. Both replicates were retained but flagged
+Flag_CO2_umolL	6	6 = No peak detected and set to 0
+Flag_DateTime	0	0 = Time recorded
+Flag_DateTime	1	1 = Time not recorded and set to 12:00
+Reservoir	BVR	Beaverdam Reservoir
+Reservoir	CCR	Carvins Cove Reservoir
+Reservoir	FCR	Falling Creek Reservoir
+Flag_CH4_umolL	7	7 = Issue with GC. Samples re-run
+Flag_CO2_umolL	7	7 = Issue with GC. Samples re-run

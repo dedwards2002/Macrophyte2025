@@ -1,0 +1,396 @@
+---
+title: "ghg_inspection_2015_2025"
+author: "Freya Olsson + Adrienne Breef-Pilz"
+date: "2025-01-16"
+output: html_document
+---
+
+This is the visualization script for the greenhouse gas data product which was used in the QA/QC process and review of the data package
+1. It takes the data file on EDI and combines it with the L1 file which has already been QAQCed. 
+3. Lists the flag frequency to check if there are any NAs or any assigned the wrong flag. 
+5. Creates plots to visualize all variables and sites
+6. Writes the new combined data to new csv
+
+```{r setup packages, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+
+# Add the names of the packages 
+pacman::p_load(tidyverse, lubridate, gsheet, readxl, plotly, htmltools)
+
+# source the qaqc code for GHG from GitHub
+#source("https://raw.githubusercontent.com/CareyLabVT/Reservoirs/refs/heads/master/Scripts/L1_functions/ghg_create.R")
+source("/Users/dominiqueedwards/Macrophyte2025/GHG/2025/ghg_qaqc_2015_2025.R")  
+
+
+```
+
+REVIEWERS and DATA PUBLISHERS START HERE BEFORE KNITTING. 
+If you run this markdown file chunk by chunk then make sure to only run the chunks labeled with your role or All. 
+
+1.  Update your role
+
+2.  Update dates for current year plots
+
+3.  If you are a reviewer, update the edi link
+
+```{r All EDIT HERE, include=FALSE}
+
+# 1. How would you like to use this script. If you are a data publisher write "publisher" if you are a reviewer write "reviewer"
+
+role <- "publisher"
+
+# 2. DATA PUBLISHERS UPDATE DATES HERE
+# Set up the current time end time of the file and the current year for QAQC plots
+#current time of QAQC for graphing
+
+# Set up the current start and end date for just looking at the current year files
+current_start <- as.Date("2025-01-01")
+
+current_end <- as.Date("2025-12-31")
+
+# 3. DATA PUBLISHERS UPDATE FILE NAMES
+# Update the name of the data files, maintenance log, and qaqc function. Double check the name of the file matches the naming convention and the start and end date of the data file. 
+
+file_name <- "ghg_2015_2025.csv"
+
+qaqc_function <- "ghg_qaqc_2015_2025.R"
+
+maintenance_log <- "ghg_maintenancelog_2015_2025.csv"
+
+# 3. For REVIEWERS: Run this section to pull the data from EDI which is in staging as a check of the data.
+# # MAKE SURE TO UPDATE THE PASTA FROM THE VERSION YOU WANT
+
+edi_link <- "https://pasta-s.lternet.edu/package/data/eml/edi/997/20/ee8e65a2a380c9fb63bbf7f4a542c895" 
+
+edi_site_description_file <- "https://pasta-s.lternet.edu/package/data/eml/edi/997/18/5a1454801605a1237489e9c14d10ff2c" 
+
+```
+
+```{r set chunks on or off, echo=FALSE}
+### Code to determine which chunks are turned on and off
+
+if(role=="publisher"){
+  make_data = TRUE
+  edi_stage = FALSE
+}else if(role == "reviewer"){
+  make_data = FALSE
+  edi_stage = TRUE
+}
+
+```
+
+```{r Publisher QAQC all files, eval=make_data, message=TRUE, warning=TRUE, echo=FALSE}
+
+current_df <- ghg_qaqc(directory = "../../../../DataNotYetUploadedToEDI/Raw_GHG/data/",
+         maintenance_file = "https://raw.githubusercontent.com/CareyLabVT/Reservoirs/refs/heads/master/Data/DataNotYetUploadedToEDI/Raw_GHG/GHG_Maintenance_Log.csv",
+        #maintenance_file = "../../../../DataNotYetUploadedToEDI/Raw_GHG/GHG_Maintenance_Log.csv", #from local file
+         gdrive = F, # Are the files on Google Drive. True or False
+         gshared_drive = as_id("1OMx7Bq9_8d6J-7enC9ruPYuvE43q9uKn"),
+         Air_Pressure = c("https://docs.google.com/spreadsheets/d/1YH9MrOVROyOgm0N55WiMxq2vDexdGRgG", 
+             "https://docs.google.com/spreadsheets/d/1ON3ZxDqfkFm65Xf5bbeyNFQGBjqYoFQg", "https://docs.google.com/spreadsheets/d/152KzTG9sHB1QEiwwSo2Do_Zq4IFfWZzf"),
+         vial_digitized_sheet = "https://docs.google.com/spreadsheets/d/1kewZb3UUqiXrlY0RUJDq4-S275mhyNybUTwcc7WKFBg",
+         Rolling_MDL = "https://docs.google.com/spreadsheets/d/1AcqbdwbogWtO8QnLH1DmtZd47o323hG9",
+         historical_file = "https://raw.githubusercontent.com/CareyLabVT/Reservoirs/refs/heads/master/Data/DataNotYetUploadedToEDI/Raw_GHG/historical_GHG_2015_2022.csv",
+         output_file = NULL,
+         MDL_file = "MDL_GHG_file.csv",
+         Vial_Number_Check = "Vial_Number_Check.csv",
+         Issue_vial = "Issue_obs.csv",
+        start_date = NULL, # change when we update to read date from EDI
+        end_date = NULL)
+
+current_df <- current_df%>%
+  dplyr::distinct(.)# get rid of dups if they snuck in
+
+
+# force the time to Eastern Time with daylight savings observed. 
+ current_df$DateTime <- force_tz(current_df$DateTime, tz = "America/New_York")
+ 
+ print("Role = publisher and using QAQC data from GitHub")
+ 
+```
+
+```{r Reviewers start here, eval = edi_stage, echo=FALSE}
+# For REVIEWERS: Run this section to pull the data from EDI which is in staging as a check of the data.
+
+   current_df <-read_csv(edi_link)
+
+
+ # # Force files from EDI to have an EST timestamp
+   current_df$DateTime <- force_tz(current_df$DateTime, tz = "America/New_York")
+
+   print("Role = reviewer and using data from EDI")
+
+```
+
+This section checks to make sure each observation has a data flag. It also checks to make sure the frequency of flags match what we expect to see. 
+
+```{r All Check there are no NAs in Flag columns, echo=FALSE}
+
+#make sure no NAS in the Flag columns
+Flags <- current_df |> 
+  select(DateTime, starts_with("Flag"))
+
+RowsNA <- Flags[!complete.cases(Flags), ] # Keep only the complete rows
+
+#check the flag column
+Flags <- current_df |> 
+  select(starts_with("Flag"))
+
+# Make a table with the number of times a flag was used
+for(f in 1:(ncol(Flags))){
+  print(colnames(Flags[f]))
+  print(table(Flags[,f], useNA = "always"))
+}
+
+```
+
+## Check to make sure that what is in the maintenance log  was actually removed
+
+### Look at the last rows of the maintenance log 
+
+We want to make sure that our maintenance log actually worked and took out the values or changes those it was supposed to 
+
+```{r All Read in the maintenance log and look at the tail, echo=FALSE}
+
+#reviewers change this link to pull in most current maintenance log
+maint <- read_csv("https://raw.githubusercontent.com/CareyLabVT/Reservoirs/refs/heads/master/Data/DataNotYetUploadedToEDI/Raw_GHG/GHG_Maintenance_Log.csv")
+
+# name the data file
+sd <- tail(maint) %>%
+  filter(flag!=7)
+
+# let's see what the tails look like
+print(tail(sd))
+
+knitr::kable((tail(sd)))
+
+```
+#### Check the that the columns have flags 
+
+Look at the first few rows of the data frame and check that the observations after the TIMESTAMP_start are flagged
+
+#### Look at the first 5 rows for that time
+
+```{r All Did the maint log work head, echo=FALSE}
+# get the last row of the data file
+last_row <- tail(sd, n=1)
+
+# Get starttime and end time
+### get start and end time of one maintenance event
+start <- as_datetime(last_row$TIMESTAMP_start, tz = "America/New_York")
+end <- as_datetime(last_row$TIMESTAMP_end, tz = "America/New_York")
+    
+# Get the time of the maintenance
+if(is.na(end)){
+  # If there the maintenance is on going then the columns will be removed until
+  # and end date is added
+  Time <- current_df |> filter(DateTime >= start) |> select(DateTime)
+  
+}else if (is.na(start)){
+  # If there is only an end date change columns from beginning of data frame until end date
+  Time <- current_df |> filter(DateTime <= end) |> select(DateTime)
+  
+}else {
+  Time <- current_df |> filter(DateTime >= start & DateTime <= end) |> select(DateTime)
+}
+
+
+### Get the names of the columns affected by maintenance
+colname_start <- last_row$start_parameter
+colname_end <- last_row$end_parameter
+
+# Make list of just the columns we want 
+
+    if (!is.na(colname_end)){
+    test <- colnames(current_df%>%select(DateTime, colname_start, paste0("Flag_",colname_start), colname_end, paste0("Flag_",colname_end)))
+    } else{
+      test <- colnames(current_df%>%select(DateTime, colname_start, paste0("Flag_",colname_start)))
+    }
+
+# Print the head of the table to make sure that data are flagged
+
+head(current_df[current_df$DateTime %in% Time$DateTime, test])
+tail(current_df[current_df$DateTime %in% Time$DateTime, test])
+
+```
+
+```{r All Plots function, include=FALSE}
+
+ghgplotting <- function(data_df,
+                        var,
+                        reservoir,
+                        site){
+# Filter the data frame based on the arguments
+  a <- data_df %>%
+  filter(Reservoir %in% reservoir,
+         Site %in% site)
+# make the plot
+# All data plots
+ all_data_plots <-  ggplot(a, aes(x = DateTime, y = .data[[var]], colour = as.factor(Depth_m), shape = as.factor(.data[[paste0("Flag_",var)]])))+
+  geom_point() +
+   {if(length(unique(a$Site))>1)facet_grid(Site ~ ., scales="free_y")}+
+  labs(title = paste0("All data"," ",reservoir," "," ",var))+
+   theme_bw()
+  # actually make the all data plots
+current_data_plots <-  a %>%
+     filter(DateTime>=as.Date(current_start) & DateTime<=as.Date(current_end)) %>%
+     ggplot( aes(x = DateTime, y = .data[[var]], colour = as.factor(Depth_m), shape = as.factor(.data[[paste0("Flag_",var)]])))+
+  geom_point() +
+   {if(length(unique(a$Site))>1)facet_grid(Site ~ ., scales="free_y")}+
+  labs(title = paste0("Current data"," ",reservoir," "," ",var))+
+   theme_bw()
+ # list the plots from above
+ all_plots <- list(all_data_plots, current_data_plots)
+ return(all_plots)
+  }
+
+```
+
+```{r All FCR Site 50 Plots All data, echo=FALSE, warning=FALSE}
+
+# make the plots
+outputs <- lapply(c("CH4_umolL", "CO2_umolL"), ghgplotting, data_df = current_df, reservoir = "FCR", site = 50)
+
+tagList(lapply(outputs[[1]], ggplotly))
+        tagList(lapply(outputs[[2]], ggplotly))
+
+```
+
+```{r All Other FCR Sites, echo=FALSE, warning=FALSE}
+
+# make a list of Sites in FCR except for Site 50 
+
+fcr_sites <- current_df|> 
+  filter(Reservoir == "FCR" & Site != 50)|>
+  select(Site)|>
+  unique()
+
+fgh <- fcr_sites$Site
+
+# make the plots
+outputs <- lapply(c("CH4_umolL", "CO2_umolL"), ghgplotting, data_df = current_df, reservoir = "FCR", site = fgh)
+
+tagList(lapply(outputs[[1]], ggplotly))
+        tagList(lapply(outputs[[2]], ggplotly))
+
+```
+
+
+```{r All BVR Site 50 Plots All data, echo=FALSE}
+
+# make the plots
+outputs <- lapply(c("CH4_umolL", "CO2_umolL"), ghgplotting, data_df = current_df, reservoir = "BVR", site = 50)
+
+tagList(lapply(outputs[[1]], ggplotly))
+        tagList(lapply(outputs[[2]], ggplotly))
+
+```
+
+```{r All BVR other Sites, echo=FALSE}
+
+# make a list of Sites in FCR except for Site 50 
+
+fcr_sites <- current_df|> 
+  filter(Reservoir == "BVR" & Site != 50)|> 
+  select(Site)|>
+  unique()
+
+fgh <- fcr_sites$Site
+
+# make the plots
+outputs <- lapply(c("CH4_umolL", "CO2_umolL"), ghgplotting, data_df = current_df, reservoir = "BVR", site = fgh)
+
+tagList(lapply(outputs[[1]], ggplotly))
+        tagList(lapply(outputs[[2]], ggplotly))
+```
+
+```{r All CCR Site 50 Plots All data, echo=FALSE}
+
+# make the plots
+outputs <- lapply(c("CH4_umolL", "CO2_umolL"), ghgplotting, data_df = current_df, reservoir = "CCR", site = c(50,51))
+
+tagList(lapply(outputs[[1]], ggplotly))
+        tagList(lapply(outputs[[2]], ggplotly))
+
+```
+
+```{r All CCR other Sites, echo=FALSE}
+
+# make a list of Sites in CCR except for Site 50 
+
+fcr_sites <- current_df|> 
+  filter(Reservoir == "CCR" & Site != 50)|> 
+  select(Site)|>
+  unique()
+
+fgh <- fcr_sites$Site
+
+# make the plots
+outputs <- lapply(c("CH4_umolL", "CO2_umolL"), ghgplotting, data_df = current_df, reservoir = "CCR", site = fgh)
+
+tagList(lapply(outputs[[1]], ggplotly))
+        tagList(lapply(outputs[[2]], ggplotly))
+```
+
+```{r Publisher Make new CSV with current and historic files, eval = make_data, include=FALSE}
+
+# convert datetimes to characters so that they are properly formatted in the output file
+ current_df$DateTime <- as.character(format(current_df$DateTime))
+
+# Need to decide on a naming convention for this file
+write.csv(current_df, file_name, row.names = F)
+
+
+
+```
+
+```{r Publisher download files, eval = make_data, echo = FALSE}
+
+download.file("https://raw.githubusercontent.com/CareyLabVT/Reservoirs/refs/heads/master/Data/DataNotYetUploadedToEDI/Raw_GHG/GHG_Maintenance_Log.csv",maintenance_log)
+
+download.file("https://raw.githubusercontent.com/CareyLabVT/Reservoirs/refs/heads/master/Scripts/L1_functions/ghg_create.R", qaqc_function)
+
+download.file("https://raw.githubusercontent.com/CareyLabVT/Reservoirs/refs/heads/master/Data/DataNotYetUploadedToEDI/Raw_GHG/ghg_functions_for_L1.R", "ghg_functions_for_L1.R")
+
+```
+
+```{r Reviewer Check the Site Description file, echo=FALSE}
+# Check that all the sites in the data frame are in the site description file
+
+df_site_des <- current_df|>
+  select(Reservoir,Site)|>
+  unique()
+
+# list of reservoirs and sites in the files
+
+site_des <- read_csv(edi_site_description_file)|>
+  select(Reservoir, Site)
+
+# compare 
+all.equal(site_des, df_site_des)
+
+print("If there are differences then tell the data publisher they need to make a new site description file.")
+
+```
+
+```{r Publisher Make site description file, eval = make_data, echo = FALSE}
+ # These lines of code make the csv of the site descriptions with lat and long
+
+  # Use Gsheet because you don't need to authenticate it. 
+  sites <- gsheet::gsheet2tbl("https://docs.google.com/spreadsheets/d/1TlQRdjmi_lzwFfQ6Ovv1CAozmCEkHumDmbg_L4A2e-8")
+  #data<- read_csv("YOUR DATA.csv")# Use this if you read in a csv
+  data <- current_df #This is the line you need to modify!
+  trim_sites = function(data,sites){
+    data_res_site=data%>% #Create a Reservoir/Site combo column
+      mutate(res_site = trimws(paste0(Reservoir,Site)))
+    sites_merged = sites%>% #Filter to Sites that are in the dataframe
+      mutate(res_site = trimws(paste0(Reservoir,Site)))%>%
+      filter(res_site%in%data_res_site$res_site)%>%
+      select(-res_site)
+  }
+  sites_trimmed = trim_sites(data,sites) 
+  write.csv(sites_trimmed,"site_descriptions.csv", row.names=F)# Write to file
+
+```
+

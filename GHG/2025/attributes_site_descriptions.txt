@@ -1,0 +1,6 @@
+attributeName	attributeDefinition	class	unit	dateTimeFormatString	missingValueCode	missingValueCodeExplanation
+Reservoir	Three-letter code corresponding to sampled reservoir	categorical			NA	value is missing
+Site	Sampling site within each reservoir	numeric	dimensionless		NA	value is missing
+Site_description	Description of sampling site	character				
+Latitude	Site latitude	numeric	degree		NA	value is missing
+Longitude	Site longitude	numeric	degree		NA	value is missing

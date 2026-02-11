@@ -1,0 +1,14 @@
+givenName	middleInitial	surName	organizationName	electronicMailAddress	userId	role	projectTitle	fundingAgency	fundingNumber
+Cayelan	C.	Carey	Virginia Tech	Cayelan@vt.edu	0000-0001-8835-4476	creator			
+Cayelan	C.	Carey	Virginia Tech	Cayelan@vt.edu	0000-0001-8835-4476	contact			
+Cayelan	C.	Carey	Virginia Tech	Cayelan@vt.edu	0000-0001-8835-4476	PI		Western Virginia Water Authority	
+Cayelan	C.	Carey	Virginia Tech	Cayelan@vt.edu	0000-0001-8835-4476	PI	Collaborative Research: URoL:ASC: Applying rules of life to forecast emergent behavior of phytoplankton and advance water quality management National Science Foundation	2318861	
+Cayelan	C.	Carey	Virginia Tech	Cayelan@vt.edu	0000-0001-8835-4476	PI	LTREB: Integrating real-time open data pipelines and forecasting to quantify ecosystem predictability at day to decadal scales National Science Foundation	2327030	
+Cayelan	C.	Carey	Virginia Tech	Cayelan@vt.edu	0000-0001-8835-4476	PI		Virginia Tech Center for Ecosystem Forecasting	34211
+R.	Quinn	Thomas	Virginia Tech	rqthomas@vt.edu	0000-0003-1282-7825	PI	RAISE: Building resilience to Earth system hazards: forecasting drinking water quality with real-time integrated catchment modeling	National Science Foundation	2438447
+Adrienne		Breef-Pilz	Virginia Tech	abreefpilz@vt.edu	0000-0002-6759-0063	creator			
+Dominique	X.	Edwards	Virginia Tech	dominique@vt.edu	0009-0005-1265-8429	creator			
+Frances	M.	Iannucci	Virginia Tech	fiannucci@vt.edu	0000-0002-7554-1819	creator			
+Quin		Campbell	Virginia Tech	quin@vt.edu	0009-0003-0809-0725	creator			
+Sean	E.	Kenny	Virginia Tech	seankenny@vt.edu	0009-0001-8130-7391	creator			
+Erin		Walters	Virginia Tech	erinw14@vt.edu	0009-0000-2143-8392	creator			

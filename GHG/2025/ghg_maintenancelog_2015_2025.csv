@@ -1,0 +1,13 @@
+Reservoir, Site, Depth,Rep, DataStream, TIMESTAMP_start, TIMESTAMP_end, start_parameter, end_parameter, vial_number, flag, update_value, notes
+FCR,100,0.1,NA, GHG, 2023-02-03 10:15:00 EST, 2023-02-03 10:22:00 EST,  CH4_umolL, CO2_umolL, NA,1, NA, sample collected but not analysed until over a month later
+FCR,50, NA,NA, GHG, 2023-02-03 12:25:00 EST, 2023-02-03 13:05:00 EST, CH4_umolL, CO2_umolL, NA,1, NA, sample collected but not analysed until over a month later
+FCR,50,3.8,2,GHG,2024-04-15 09:53:00 EDT, 2024-04-15 09:53:00 EDT,CO2_umolL,NA,NA,1,NA,Very high value and removed
+FCR,50,3.8,NA,GHG,2024-04-15 09:53:00 EDT, 2024-04-15 10:53:00 EDT,CO2_umolL,NA,328,1,NA,Moisture interfered with CO2 peak and not usable
+BVR,50,3,NA,GHG,2024-05-06 10:32:00 EDT , 2024-05-06 11:32:00 EDT ,CO2_umolL,NA,271,1,NA,Moisture interfered with CO2 peak
+FCR,50,5,NA,GHG,2024-05-31 11:42:00 EDT, 2024-05-31 12:42:00 EDT,CO2_umolL,NA,21,1,NA,Moisture interfered with CO2 peak
+FCR,1.1,0.1,NA,GHG,2024-08-26 10:56:00 EDT, 2024-08-26 11:56:00 EDT,CO2_umolL,NA,97,1,NA,Moisture interfered with CO2 peak
+FCR,200,0.1,NA,GHG,2024-09-02 13:15:00 EDT, 2024-09-02 14:15:00 EDT,CO2_umolL,NA,345,1,NA,Moisture interfered with CO2 peak
+FCR,50,8,NA,GHG,2024-12-03 10:52:00 EDT, 2024-12-03 10:54:00 EDT, CO2_umolL,NA,215,1,NA,Very end of CO2 peak was cut off
+FCR,	50,	8,	2,	GHG,	2025-06-02 10:56:00 EDT,	2025-06-02 10:59:00 EDT,	 CO2_umolL,	NA,	367,	4,	NA,	 The difference between the reps are above the limit of quantification and >50% different from each other
+BVR,	50,	6,	NA,	GHG,	2025-09-29 11:12:00 EDT,	2025-09-29 11:15:00 EDT,	 CH4_umolL,	NA,	406,	4,	NA,	 The difference between the reps are above the limit of quantification and >50% different from each other
+BVR,	50,	3,	NA,	GHG,	2025-07-21 10:49:00 EDT, 2025-07-21 10:51:00 EDT,		 CO2_umolL,	NA,	57,	4,	NA,	Very high value; Syringe sample- not air tight. Discard if numbers don't make sense.

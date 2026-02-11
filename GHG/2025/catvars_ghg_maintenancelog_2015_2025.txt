@@ -1,0 +1,7 @@
+attributeName	code	definition
+Reservoir	FCR	Falling Creek Reservoir
+Reservoir	BVR	Beaverdam Reservoir 
+end_parameter	CO2_umolL	Carbon dioxide concentration
+flag	1	Sample was either not collected or was not retained due to issues with the GC
+start_parameter	CH4_umolL	Methane concentration
+start_parameter	CO2_umolL	Carbon dioxide concentration

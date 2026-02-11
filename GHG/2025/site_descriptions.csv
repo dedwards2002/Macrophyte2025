@@ -1,0 +1,36 @@
+"Reservoir","Site","Site_description","Latitude","Longitude"
+"BVR",1.1,"Toe drain site at right-most outflow below Beaverdam Reservoir (when facing dam)",37.312969,-79.814467
+"BVR",1.2,"Toe drain site at middle outflow below Beaverdam Reservoir (when facing dam)",37.312719,-79.814879
+"BVR",1.3,"Toe drain site at left-most outflow below Beaverdam Reservoir (when facing dam)",37.312483,-79.815011
+"BVR",1.4,"Pool site at bottom of left-most outflow toe drain below Beaverdam Reservoir",37.312592,-79.814946
+"BVR",20,"Pelagic upstream site on western arm in central part of depth transect of Beaverdam Reservoir approximately 1/3 of the distance between the western reservoir inflow and the confluence of the two reservoir arms closest to the inflow (when reservoir is at full pond)",37.31701,-79.8226
+"BVR",30,"Pelagic upstream site on eastern arm in central part of depth transect at Beaverdam Reservoir; approximately halfway point between eastern reservoir inflow and confluence of two reservoir arms (when reservoir is at full pond)",37.31921,-79.8182
+"BVR",40,"Pelagic upstream site in Beaverdam Reservoir at the location of the upstream pipe outflow leading to Falling Creek Reservoir",37.314783,-79.820864
+"BVR",45,"Pelagic upstream site in central part of depth transect of Beaverdam Reservoir approximately halfway from reservoir arm confluence and the dam",37.31447,-79.8187
+"BVR",50,"Pelagic deep hole site nearest to dam; at BVR platform closest to dam",37.31288,-79.8159
+"BVR",100,"Inflow stream site to BVR on western reservoir arm",37.31957,-79.82437
+"BVR",200,"Inflow stream site to BVR on eastern reservoir arm that drains upstream impoundment",37.322851,-79.81721
+"CCR",50,"Pelagic deep hole site of Carvins Cove Reservoir near dam (also site 6 for Ironman sampling); the closest access point to the dam via boat and 21 m at full pond",37.3706,-79.9582
+"CCR",51,"Pelagic site directly at the dam sampled from dam walkway (site of sensors); can be sampled to 19m at full pond",37.3697,-79.958
+"CCR",101,"Inflow stream site to Carvins Cove Reservoir at Horse Pen Branch",37.3646,-79.9733
+"CCR",301,"Inflow stream site to Carvins Cove Reservoir at Sawmill Branch inflow site upstream of reservoir where fire road bridge crosses the stream",37.4169,-79.9771
+"FCR",1,"Outflow stream site at Falling Creek Reservoir spillway",37.30248264,-79.8373672
+"FCR",1.1,"Toe drain site at bottom of Falling Creek Reservoir dam",37.30210565,-79.83682204
+"FCR",20,"Pelagic upstream site at central depth transect of Falling Creek Reservoir; adjacent to where Tunnel Branch inflow enters into the reservoir",37.30769,-79.8371
+"FCR",30,"Pelagic upstream site at central depth transect of Falling Creek Reservoir; approximately halfway between dam and Falling Creek inflow",37.30534,-79.8383
+"FCR",45,"Pelagic upstream site at central depth transect of Falling Creek Reservoir; where reservoir flow enters into the deep hole basin of the reservoir",37.30418,-79.8383
+"FCR",50,"Pelagic deep hole site nearest to Falling Creek Reservoir dam; at end of FCR catwalk",37.30325,-79.8373
+"FCR",99,"Inflow stream site on Tunnel Branch primary inflow to Falling Creek Reservoir just above where the stream enters into the reservoir",37.307613,-79.8360878
+"FCR",100,"Inflow stream site on Tunnel Branch primary inflow to Falling Creek Reservoir; long-term monitoring site where gauged weir is located",37.30858,-79.83494
+"FCR",101,"Inflow stream site on Tunnel Branch primary inflow to Falling Creek Reservoir; upstream of weir and downstream of confluence of BVR inflow pipe and overland flow stream",37.309653,-79.830467
+"FCR",102,"Inflow stream site on Tunnel Branch primary inflow to Falling Creek Reservoir; upstream of weir and just below where the BVR pipe emerges",37.311678,-79.827357
+"FCR",200,"Inflow stream site on Falling Creek secondary inflow to Falling Creek Reservoir; also referred to as the wetland stream",37.30943,-79.83619
+"FCR",199.8,"Inflow stream site on Falling Creek secondary inflow to Falling Creek Reservoir; the intersection of the inflow into the reservoir",37.30923,-79.8363
+"FCR",199.9,"Inflow stream site on Falling Creek secondary inflow to Falling Creek Reservoir; the midway point between the wetland site (FCR 200) and the intersection site (FCR 199.8)",37.30958,-79.83602
+"FCR",10.1,"Littoral site directly west of site 10 at FCR. Macrophyte populated site; Juncus effusus dominant",37.30874,-79.83716
+"FCR",10.2,"Littoral site southwest of site 10 at FCR. Macrophyte populated site; Sparganium americanum dominant",37.3085,-79.83726
+"FCR",20.1,"Littoral site northwest of site 20 at FCR. Macrophyte populated site; Scirpus cyperinus dominant",37.30816,-79.83742
+"FCR",20.9,"Littoral site directly east of site 20 at FCR. Macrophyte populated site; Potamogeton pusillus dominant",37.30751,-79.83668
+"FCR",30.1,"Littoral site northwest of site 30 at FCR. No macrophytes present",37.30554,-79.83862
+"FCR",30.9,"Littoral site southeast of site 30 at FCR. No macrophytes present",37.3049,-79.83801
+"FCR",45.1,"Littoral site directly west of site 45 at FCR. Macrophyte populated site; Typha latifolia dominant",37.3042,-79.83884

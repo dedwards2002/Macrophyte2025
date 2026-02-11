@@ -1,0 +1,7 @@
+Contributions to the 2025 revision:
+
+CCC developed and led the reservoir monitoring program. ABP led the 2025 field crew, contributed substantially to fieldwork, and updated QAQC workflows and initiated the new workflow. ABP and DXE conducted fieldwork, analyzed samples in the laboratory, performed QAQC, and collated data. FMI and DXE performed laboratory analyses and conducted QAQC. SEK, EW, QC contributed to fieldwork, data digitization, and field monitoring preparation in 2025. 
+
+Acknowledgments and historical contributions:
+
+This data package has been iteratively updated over time and builds on the many historical contributions of co-authors listed in previous revisions. We thank the Western Virginia Water Authority for providing access to these sites, the Reservoir Group for contributing to fieldwork, and to Rohit Shukla, Frances Iannucci, Alicia Bateman, and Dexter Howard for constructive reviews of this data package.
